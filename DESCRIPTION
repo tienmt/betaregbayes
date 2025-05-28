@@ -1,0 +1,18 @@
+Package: betaregbayes
+Title: Sparse Bayesian Beta regression for bounded response via Gibbs sampler
+Version: 0.1.0
+Authors@R: 
+    person("The Tien", "Mai", , "the.tien.mai@fhi.no", role = c("aut", "cre"))
+Description: This package allows user to fit sparse Beta regression for bounded response in (0,1) via Bayesian approach with Horseshoe prior. 
+            The main algorithm is a novel Gibbs sampler allowing to obtain samples from the posterior. Credible intervals can be obtained directly. Variable selection is also returned.
+Depends: R (>= 4.1.0)
+Imports:
+    BayesLogit,
+    mvtnorm,
+    stats
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+Suggests: 
+    testthat (>= 3.0.0)
