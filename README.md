@@ -25,7 +25,7 @@ library(betaregbayes)
    y <- rbeta(n, mu * phi, (1 - mu) * phi)
 
   res <- betareg_bayes(y, X, phi = 10, n_iter = 800, burn_in = 200)
-   estimate_HS <- colMeans(res$beta_samples)
+  ( estimate_HS <- colMeans(res$beta_samples) )
    mean( (estimate_HS - beta_true)^2 )
    res$selected_variable
    res$ci
