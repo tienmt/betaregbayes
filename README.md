@@ -26,6 +26,11 @@ library(betaregbayes)
 
   res <- betareg_bayes(y, X, phi = 10, n_iter = 800, burn_in = 200)
   ( estimate_HS <- colMeans(res$beta_samples) )
-   mean( (estimate_HS - beta_true)^2 )
+# find the ell_2 error to the true
+   sum( (estimate_HS - beta_true)^2 )
+
+# get the selected variable
    res$selected_variable
+
+# get the credible intervals
    res$ci
