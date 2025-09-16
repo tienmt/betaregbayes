@@ -1,0 +1,13 @@
+citHeader("To cite the mypackage R package in publications, please use:")
+
+bibentry(
+  bibtype = "Article",
+  title = "Handling bounded response in high dimensions: a Horseshoe prior Bayesian Beta regression approach",
+  author = "The Tien Mai",
+  journal = "arXiv:2505.22211",
+  year = "2025",
+  volume = "",
+  number = "",
+  pages = "",
+  doi = "10.48550/arXiv.2505.22211"
+)
