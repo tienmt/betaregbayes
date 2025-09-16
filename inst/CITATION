@@ -1,4 +1,4 @@
-citHeader("To cite the mypackage R package in publications, please use:")
+citHeader("To cite  betareg  package, please use:")
 
 bibentry(
   bibtype = "Article",
