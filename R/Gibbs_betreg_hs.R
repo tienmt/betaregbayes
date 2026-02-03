@@ -96,11 +96,29 @@ betareg_bayes <- function(y,
     omega <- BayesLogit::rpg(n = n, h = phi, z = eta)
 
     # Step 2: Sample beta | omega, HS prior
-    kappa <- phi * (y - 0.5)
-    Lambda_inv <- diag(1 / (lambda2 * tau2))
-    V_beta <- solve( tX %*% (omega * X) + Lambda_inv)
-    m_beta <- V_beta %*% (tX %*% kappa)
-    beta <- as.vector(mvtnorm::rmvnorm(1, mean = m_beta, sigma = V_beta))
+    # kappa <- phi * (y - 0.5)
+    # Lambda_inv <- diag(1 / (lambda2 * tau2))
+    # V_beta <- solve( tX %*% (omega * X) + Lambda_inv)
+    # m_beta <- V_beta %*% (tX %*% kappa)
+    # beta <- as.vector(mvtnorm::rmvnorm(1, mean = m_beta, sigma = V_beta))
+ 
+    # Step 2: Sample beta | omega, HS prior (Woodbury version)
+    diagD <- tau2 * lambda2          # prior variances
+    D_sqrt <- sqrt(diagD)
+    XD <- t(tX * diagD)              # n x p
+    Omega_inv <- 1 / omega
+    # S = Omega^{-1} + X D X^T
+    S <- diag(Omega_inv, n) + XD %*% tX
+    S_chol <- chol(S)
+    # Posterior mean: D X^T S^{-1} kappa
+    kappa_tilde <- kappa / omega
+    mu_beta <- t(XD) %*%  backsolve(S_chol, forwardsolve(t(S_chol), kappa_tilde))
+    # Gaussian sampling using Rue/Woodbury trick
+    u <- rnorm(p) * D_sqrt                 # u ~ N(0, D)
+    v <- rnorm(n) * sqrt(Omega_inv)        # v ~ N(0, Omega^{-1})
+    
+    beta <- as.vector(  mu_beta + u + t(XD) %*%
+        backsolve(  S_chol,  forwardsolve(t(S_chol), v - X %*% u)  )  )
 
     # Step 3: Update local lambda2 and auxiliary nu
     for (j in 1:p) {
