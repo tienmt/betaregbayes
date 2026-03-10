@@ -96,7 +96,7 @@ betareg_bayes <- function(y,
     omega <- BayesLogit::rpg(n = n, h = phi, z = eta)
 
     # Step 2: Sample beta | omega, HS prior
-    # kappa <- phi * (y - 0.5)
+     kappa <- phi * (y - 0.5)
     # Lambda_inv <- diag(1 / (lambda2 * tau2))
     # V_beta <- solve( tX %*% (omega * X) + Lambda_inv)
     # m_beta <- V_beta %*% (tX %*% kappa)
